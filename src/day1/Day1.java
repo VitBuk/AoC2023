@@ -14,9 +14,9 @@ public class Day1 {
             FileInputStream fis = new FileInputStream("src/day1/values.txt");
             Scanner sc = new Scanner(fis);
             while (sc.hasNextLine()) {
-                sum += getValue(sc.nextLine());
+                sum += getValuePartTwo(sc.nextLine());
             }
-            sc.close();     //closes the scanner
+            sc.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,39 +46,42 @@ public class Day1 {
         int firstDigit = 0;
         int lastDigit = 0;
         int digit;
+        int digitFromChar;
+        int digitFromWord;
+
 
         for (int i=0; i < line.length(); i++) {
-            if (Character.isDigit() || isStartOfTheDigit)
+            if (Character.isDigit(line.charAt(i))){
+                digitFromChar = Integer.parseInt(String.valueOf(line.charAt(i)));
+                if (!hasFirstDigit) {
+                    firstDigit = digitFromChar;
+                    hasFirstDigit = true;
+                }
+                lastDigit = digitFromChar;
+            }
+
+            digitFromWord = wordToDigit(line.substring(i));
+            if (digitFromWord != 0){
+                if (!hasFirstDigit) {
+                    firstDigit = digitFromWord;
+                    hasFirstDigit = true;
+                }
+                lastDigit = digitFromWord;
+            }
         }
+        return firstDigit*10 + lastDigit;
     }
 
-    private boolean isStartOfTheDigit(String word) {
-        for (int i=smallestWord; i < largestWord; i++) {
-            
-        }
-    }
     private int wordToDigit (String word) {
-        switch(word) {
-            case "one":
-                return 1;
-            case "two":
-                return 2;
-            case "three":
-                return 3;
-            case "four":
-                return 4;
-            case "five":
-                return 5;
-            case "six":
-                return 6;
-            case "seven":
-                return 7;
-            case "eight":
-                return 8;
-            case "nine":
-                return 9;
-            default:
-                return 0;
-        }
+        if (word.startsWith("one")) return 1;
+        else if (word.startsWith("two")) return 2;
+        else if (word.startsWith("three")) return 3;
+        else if (word.startsWith("four")) return 4;
+        else if (word.startsWith("five")) return 5;
+        else if (word.startsWith("six")) return 6;
+        else if (word.startsWith("seven")) return 7;
+        else if (word.startsWith("eight")) return 8;
+        else if (word.startsWith("nine")) return 9;
+        else return 0;
     }
 }
