@@ -35,12 +35,14 @@ public class Day2 {
     }
 
     private static boolean checkGame(String line) {
-        String withOutId = line.split(": ")[1];
-        String[] tries = withOutId.split("; ");
-        for (String s : tries)
+        for (String s : getTries(line))
             if (!checkOneTry(s)) return false;
 
         return true;
+    }
+    private static String[] getTries(String line) {
+        String withOutId = line.split(": ")[1];
+        return withOutId.split("; ");
     }
     private static boolean checkOneTry(String line) {
         System.out.println("checkOneTry line: " + line);
@@ -67,5 +69,9 @@ public class Day2 {
         split = gameId.split(" ");
         System.out.println("getId: " + Integer.parseInt(split[1]));
         return Integer.parseInt(split[1]);
+    }
+
+    private static int powerOfSet(){
+        return 0;
     }
 }
