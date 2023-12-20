@@ -45,7 +45,6 @@ public class Day1 {
         boolean hasFirstDigit = false;
         int firstDigit = 0;
         int lastDigit = 0;
-        int digit;
         int digitFromChar;
         int digitFromWord;
 
