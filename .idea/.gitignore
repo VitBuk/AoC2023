@@ -7,8 +7,8 @@
 /dataSources/
 /dataSources.local.xml
 /out
-/.idea
-/AoC2023.iml
+*.idea
+*AoC2023.iml
 *.class
 
 # Log file
