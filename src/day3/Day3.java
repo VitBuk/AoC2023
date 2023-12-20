@@ -102,6 +102,10 @@ public class Day3 {
         }
         charsAround.add(threeStrings.get(0).charAt(sameColumn));
         charsAround.add(threeStrings.get(2).charAt(sameColumn));
-        if (rightColumn )
+        if (rightColumn <= threeStrings.get(0).length()) {
+            charsAround.add(threeStrings.get(0).charAt(rightColumn));
+            charsAround.add(threeStrings.get(1).charAt(rightColumn));
+            charsAround.add(threeStrings.get(2).charAt(rightColumn));
+        }
     }
 }
