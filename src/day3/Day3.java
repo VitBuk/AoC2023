@@ -2,9 +2,7 @@ package day3;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Day3 {
     private static final int lineLength = 140;
@@ -140,5 +138,37 @@ public class Day3 {
         }
 
         return charsAround;
+    }
+
+    private static int getGearRatio(List<String> threeLines, int gearIndex) {
+        Set<Number> numbersInGear = new HashSet<>();
+        String upperLine = threeLines.get(0);
+        String middleLine = threeLines.get(1);
+        String downLine = threeLines.get(2);
+
+        if (Character.isDigit(upperLine.charAt(gearIndex-1))){
+            getNumberByItsDigit(upperLine, gearIndex-1);
+        }
+    }
+
+    private static Number getNumberByItsDigit(String line, int digitIndex) {
+        int startIndex=digitIndex;
+        int endIndex = digitIndex+1;
+        for (int i=0; i<digitIndex; i++) {
+            if (Character.isDigit(line.charAt(digitIndex-i))){
+                startIndex = digitIndex-i;
+            } else break;
+        }
+
+        for (int i=0; i<line.length(); i++) {
+            if (Character.isDigit(line.charAt(digitIndex+i))){
+                endIndex = digitIndex+i;
+            } else break;
+
+        }
+        Number number = new Number();
+
+
+        return Number;
     }
 }
