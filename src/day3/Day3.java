@@ -96,13 +96,13 @@ public class Day3 {
         return sumOfParts;
     }
 
-    private static boolean isNonDigitSymbol(Character c) {
-        return !Character.isDigit(c) && !c.equals('.');
+    private static boolean notAPoint(Character c) {
+        return !c.equals('.');
     }
 
     private static boolean hasNonDigitSymbolAround(List<Character> charsAround) {
         for (char c : charsAround) {
-            if (isNonDigitSymbol(c))
+            if (notAPoint(c))
                 return true;
         }
         return false;
