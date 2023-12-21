@@ -17,7 +17,8 @@ public class Day3 {
                 lines.add(sc.nextLine());
             }
 
-            System.out.println("Result: " + sumOfParts(lines));
+            System.out.println("Sum of Parts: " + sumOfParts(lines));
+            System.out.println("Sum of Gear Ratios: " + sumOfGearRatios(lines));
             sc.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,30 +64,20 @@ public class Day3 {
             if (Character.isDigit(middleLine.charAt(i))){
                 if (!inANumberSequence) {
                     numberStart = i;
-                    System.out.println("numberStart = " + numberStart);
                 }
 
                 inANumberSequence = true;
                 charsAround = charsAround(threeLines, i);
-                System.out.println("For char: " + middleLine.charAt(i));
-                for (char c : charsAround) {
-                    System.out.print(c);
-                    System.out.println("------");
-                }
 
                 if (!isAPart){
                     isAPart = hasNonDigitSymbolAround(charsAround);
                 }
-                System.out.println("isAPart: " + isAPart);
 
                 if (i == lineLength-1 || !Character.isDigit(middleLine.charAt(i+1))) {
                     numberEnd = i+1;
                     if (isAPart) {
-                        System.out.println("Number start: " + numberStart + " Number end: " + numberEnd);
                         number = Integer.parseInt(middleLine.substring(numberStart, numberEnd));
                         sumOfParts += number;
-                        System.out.println("Number: " + number);
-                        System.out.println("SumOfParts: " + sumOfParts);
                         isAPart = false;
                     }
                     inANumberSequence = false;
@@ -140,18 +131,71 @@ public class Day3 {
         return charsAround;
     }
 
-    private static int getGearRatio(List<String> threeLines, int gearIndex) {
+    private static int sumOfGearRatios (List<String> lines){
+        List<String> threeLines = new ArrayList<>();
+        int sumOfGearRatios = 0;
+
+        for (int i=0; i < lines.size(); i++) {
+            if (i > 0)
+                threeLines.add(lines.get(i-1));
+            else
+                threeLines.add(EMPTY_LINE);
+
+            threeLines.add(lines.get(i));
+
+            if( i < lines.size()-1)
+                threeLines.add(lines.get(i+1));
+            else
+                threeLines.add(EMPTY_LINE);
+
+            sumOfGearRatios += sumOfGearRatiosForLine(threeLines, i);
+            threeLines.clear();
+        }
+        return sumOfGearRatios;
+    }
+    private static int sumOfGearRatiosForLine (List<String> threeLines, int middleLineIndex ){
+        int sumOfGearRatiosForLine = 0;
+        for (int i=0; i<threeLines.get(1).length(); i++){
+            if (threeLines.get(1).charAt(i) == '*')
+                sumOfGearRatiosForLine += getGearRatio(threeLines, middleLineIndex, i);
+        }
+
+        return sumOfGearRatiosForLine;
+    }
+    private static int getGearRatio(List<String> threeLines, int middleLineIndex, int gearIndex) {
         Set<Number> numbersInGear = new HashSet<>();
         String upperLine = threeLines.get(0);
         String middleLine = threeLines.get(1);
         String downLine = threeLines.get(2);
+        int result = 0;
 
-        if (Character.isDigit(upperLine.charAt(gearIndex-1))){
-            getNumberByItsDigit(upperLine, gearIndex-1);
+        for (int i=-1; i<2; i++ ) {
+            if (Character.isDigit(upperLine.charAt(gearIndex + i)))
+                numbersInGear.add(getNumberByItsDigit(upperLine, middleLineIndex, gearIndex + i));
+            if (Character.isDigit(downLine.charAt(gearIndex + i)))
+                numbersInGear.add(getNumberByItsDigit(downLine, middleLineIndex, gearIndex + i));
         }
+
+        if (Character.isDigit(middleLine.charAt(gearIndex -1)))
+            numbersInGear.add(getNumberByItsDigit(middleLine, middleLineIndex, gearIndex -1));
+        if (Character.isDigit(middleLine.charAt(gearIndex + 1)))
+            numbersInGear.add(getNumberByItsDigit(middleLine, middleLineIndex, gearIndex + 1));
+
+        System.out.println("numbersInGear.size(): " + numbersInGear.size());
+        if (numbersInGear.size() == 2){
+            result=1;
+            System.out.println("Result before for: " + result);
+            for (Number number : numbersInGear) {
+                System.out.println("Value of a number: " + number.getValue());
+                result *= number.getValue();
+            }
+
+        }
+        System.out.println("result: " + result);
+        return result;
     }
 
-    private static Number getNumberByItsDigit(String line, int digitIndex) {
+    private static Number getNumberByItsDigit(String line, int lineIndex, int digitIndex) {
         int startIndex=digitIndex;
         int endIndex = digitIndex+1;
         for (int i=0; i<digitIndex; i++) {
@@ -160,15 +204,12 @@ public class Day3 {
             } else break;
         }
 
-        for (int i=0; i<line.length(); i++) {
+        for (int i=0; i<line.length()-digitIndex; i++) {
             if (Character.isDigit(line.charAt(digitIndex+i))){
                 endIndex = digitIndex+i;
             } else break;
 
         }
-        Number number = new Number();
-
-
-        return Number;
+        return new Number(lineIndex, startIndex, endIndex);
     }
 }
