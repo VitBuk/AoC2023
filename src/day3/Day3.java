@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Day3 {
+    private static final int lineLength = 140;
     private static final String EMPTY_LINE = "....................................." +
             ".......................................................................................................";
     public static void answer() {
@@ -79,18 +80,20 @@ public class Day3 {
                     isAPart = hasNonDigitSymbolAround(charsAround);
                 }
                 System.out.println("isAPart: " + isAPart);
-            } else if (inANumberSequence) {
-                numberEnd = i;
-                if (isAPart) {
-                    number = Integer.parseInt(middleLine.substring(numberStart, numberEnd));
-                    sumOfParts += number;
-                    System.out.println("Number: " + number);
-                    System.out.println("SumOfParts: " + sumOfParts);
-                    isAPart = false;
-                }
-                inANumberSequence = false;
-            }
 
+                if (i == lineLength-1 || !Character.isDigit(middleLine.charAt(i+1))) {
+                    numberEnd = i+1;
+                    if (isAPart) {
+                        System.out.println("Number start: " + numberStart + " Number end: " + numberEnd);
+                        number = Integer.parseInt(middleLine.substring(numberStart, numberEnd));
+                        sumOfParts += number;
+                        System.out.println("Number: " + number);
+                        System.out.println("SumOfParts: " + sumOfParts);
+                        isAPart = false;
+                    }
+                    inANumberSequence = false;
+                }
+            }
         }
 
         return sumOfParts;
@@ -115,14 +118,24 @@ public class Day3 {
 
         if (leftColumn >= 0){
             charsAround.add(threeStrings.get(0).charAt(leftColumn));
-            charsAround.add(threeStrings.get(1).charAt(leftColumn));
+            if (Character.isDigit(threeStrings.get(1).charAt(leftColumn)))
+                charsAround.add('.');
+            else
+                charsAround.add(threeStrings.get(1).charAt(leftColumn));
+
             charsAround.add(threeStrings.get(2).charAt(leftColumn));
         }
-        charsAround.add(threeStrings.get(0).charAt(indexOfChar));
-        charsAround.add(threeStrings.get(2).charAt(indexOfChar));
+            charsAround.add(threeStrings.get(0).charAt(indexOfChar));
+            charsAround.add(threeStrings.get(2).charAt(indexOfChar));
+
         if (rightColumn < threeStrings.get(0).length()) {
             charsAround.add(threeStrings.get(0).charAt(rightColumn));
-            charsAround.add(threeStrings.get(1).charAt(rightColumn));
+
+            if (Character.isDigit(threeStrings.get(1).charAt(rightColumn)))
+                charsAround.add('.');
+            else
+                charsAround.add(threeStrings.get(1).charAt(rightColumn));
+
             charsAround.add(threeStrings.get(2).charAt(rightColumn));
         }
 
