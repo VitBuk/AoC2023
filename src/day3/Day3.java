@@ -171,21 +171,27 @@ public class Day3 {
         int result = 0;
 
         for (int i=-1; i<2; i++ ) {
-            if (Character.isDigit(upperLine.charAt(gearIndex + i)))
-                numbersInGear.add(getNumberByItsDigit(upperLine, middleLineIndex, gearIndex + i));
-            if (Character.isDigit(downLine.charAt(gearIndex + i)))
-                numbersInGear.add(getNumberByItsDigit(downLine, middleLineIndex, gearIndex + i));
+            System.out.println("gearIndex = " + gearIndex);
+            if (gearIndex+i >=0 && gearIndex+i <=lineLength-1){
+                if (Character.isDigit(upperLine.charAt(gearIndex + i))) {
+                    System.out.println("in the if!!");
+                    numbersInGear.add(getNumberByItsDigit(upperLine, middleLineIndex-1, gearIndex + i));
+                }
+                if (Character.isDigit(downLine.charAt(gearIndex + i)))
+                    numbersInGear.add(getNumberByItsDigit(downLine, middleLineIndex+1, gearIndex + i));
+            }
         }
 
-        if (Character.isDigit(middleLine.charAt(gearIndex -1)))
-            numbersInGear.add(getNumberByItsDigit(middleLine, middleLineIndex, gearIndex -1));
-        if (Character.isDigit(middleLine.charAt(gearIndex + 1)))
-            numbersInGear.add(getNumberByItsDigit(middleLine, middleLineIndex, gearIndex + 1));
+        if (gearIndex-1 >= 0 && Character.isDigit(middleLine.charAt(gearIndex -1)))
+            numbersInGear.add(getNumberByItsDigit(middleLine, middleLineIndex-1, gearIndex -1));
+        if (gearIndex+1 <= lineLength-1 && Character.isDigit(middleLine.charAt(gearIndex + 1)))
+            numbersInGear.add(getNumberByItsDigit(middleLine, middleLineIndex+1, gearIndex + 1));
 
         System.out.println("numbersInGear.size(): " + numbersInGear.size());
         System.out.println("Numbers value: ");
         for (Number number : numbersInGear)
             System.out.println(number.getValue());
+
         if (numbersInGear.size() == 2){
             result=1;
             System.out.println("Result before for: " + result);
@@ -205,7 +211,7 @@ public class Day3 {
         System.out.println("digitIndex: " + digitIndex);
         int startIndex=digitIndex;
         int endIndex = digitIndex+1;
-        for (int i=0; i<digitIndex; i++) {
+        for (int i=1; i<digitIndex+1; i++) {
             if (Character.isDigit(line.charAt(digitIndex-i))){
                 startIndex = digitIndex-i;
             } else break;
@@ -217,8 +223,13 @@ public class Day3 {
             } else break;
 
         }
+        System.out.println("new Number: ");
+        System.out.println("lineINdex: " + lineIndex);
+        System.out.println("startIndex " + startIndex);
+        System.out.println("endIndex " + endIndex);
         Number number = new Number(lineIndex, startIndex, endIndex);
-        number.setValue(line.substring(startIndex, endIndex));
+        number.setValue(line.substring(startIndex, endIndex+1));
+        System.out.println("value: " + number.getValue());
         return number;
     }
 
