@@ -160,6 +160,7 @@ public class Day3 {
                 sumOfGearRatiosForLine += getGearRatio(threeLines, middleLineIndex, i);
         }
 
+        System.out.println("sumOfGearRationForLine: " + sumOfGearRatiosForLine);
         return sumOfGearRatiosForLine;
     }
     private static int getGearRatio(List<String> threeLines, int middleLineIndex, int gearIndex) {
@@ -182,6 +183,9 @@ public class Day3 {
             numbersInGear.add(getNumberByItsDigit(middleLine, middleLineIndex, gearIndex + 1));
 
         System.out.println("numbersInGear.size(): " + numbersInGear.size());
+        System.out.println("Numbers value: ");
+        for (Number number : numbersInGear)
+            System.out.println(number.getValue());
         if (numbersInGear.size() == 2){
             result=1;
             System.out.println("Result before for: " + result);
@@ -196,6 +200,9 @@ public class Day3 {
     }
 
     private static Number getNumberByItsDigit(String line, int lineIndex, int digitIndex) {
+        System.out.println(line);
+        System.out.println("lineIndex: " + lineIndex);
+        System.out.println("digitIndex: " + digitIndex);
         int startIndex=digitIndex;
         int endIndex = digitIndex+1;
         for (int i=0; i<digitIndex; i++) {
@@ -210,6 +217,10 @@ public class Day3 {
             } else break;
 
         }
-        return new Number(lineIndex, startIndex, endIndex);
+        Number number = new Number(lineIndex, startIndex, endIndex);
+        number.setValue(line.substring(startIndex, endIndex));
+        return number;
     }
+
+
 }
