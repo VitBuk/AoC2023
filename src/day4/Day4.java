@@ -1,5 +1,6 @@
 package day4;
 
+<<<<<<< HEAD
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
@@ -74,4 +75,7 @@ public class Day4 {
 
         return sumOfPoints;
     }
+=======
+public class Day4 {
+>>>>>>> 929c8d5d14ee1b3275a12387160c4a8ab9c80829
 }
