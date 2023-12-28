@@ -55,18 +55,21 @@ public class Day4 {
                 }
             }
 
+            System.out.print("Contains: ");
             for (int i : playerNumbers) {
                 if (winNumbers.contains(i)) {
+                    System.out.print(i + ",");
                     if (linePoints == 0)
                         linePoints =1;
-
-                    linePoints *=2;
+                    else
+                        linePoints *=2;
                 }
             }
 
             sumOfPoints += linePoints;
             System.out.println("LinePoints: " + linePoints);
             System.out.println("SumOfPoints: = " + sumOfPoints);
+            System.out.println("-----");
         }
 
         return sumOfPoints;
