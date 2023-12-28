@@ -1,6 +1,5 @@
 package day4;
 
-<<<<<<< HEAD
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
@@ -41,7 +40,7 @@ public class Day4 {
             for (String s1 : strWinNumbers) {
                 if (!s1.equals("")) {
                     if (s1.charAt(0) == ' ')
-                        winNumbers.add(Integer.parseInt(s1.substring(1,2)));
+                        winNumbers.add(Integer.parseInt(s1.substring(1, 2)));
                     else
                         winNumbers.add(Integer.parseInt(s1));
                 }
@@ -50,7 +49,7 @@ public class Day4 {
             for (String s2 : strPlayerNumbers) {
                 if (!s2.equals("")) {
                     if (s2.charAt(0) == ' ')
-                        playerNumbers.add(Integer.parseInt(s2.substring(1,2)));
+                        playerNumbers.add(Integer.parseInt(s2.substring(1, 2)));
                     else
                         playerNumbers.add(Integer.parseInt(s2));
                 }
@@ -61,9 +60,9 @@ public class Day4 {
                 if (winNumbers.contains(i)) {
                     System.out.print(i + ",");
                     if (linePoints == 0)
-                        linePoints =1;
+                        linePoints = 1;
                     else
-                        linePoints *=2;
+                        linePoints *= 2;
                 }
             }
 
@@ -75,7 +74,4 @@ public class Day4 {
 
         return sumOfPoints;
     }
-=======
-public class Day4 {
->>>>>>> 929c8d5d14ee1b3275a12387160c4a8ab9c80829
 }
